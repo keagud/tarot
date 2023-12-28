@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+
+
+  "composite": true,
+    "target": "ES2015",
+    "useDefineForClassFields": true,
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "dist"
+  },
+
+  "exclude": [
+    "node_modules"
+  ],
+}
