@@ -1,5 +1,9 @@
 import rawData from './cards.json';
 
+import type { TarotCard, Suit, RankName, CardParams } from "../../common/types.d.ts"
+export type { TarotCard, Suit, RankName, CardParams } from "../../common/types.d.ts"
+
+
 function must<T>(val?: T, message: string | undefined = undefined): NonNullable<T> {
   if (val === null || val === undefined) {
     throw new Error(message ?? 'Unexpected null value');
@@ -62,38 +66,6 @@ const ranks = [
   'major',
 ] as const;
 
-export type RankName = (typeof ranks)[number];
-export type Suit = (typeof suits)[number];
-
-export interface TarotCard {
-  rank: number;
-  rankName: RankName;
-  suit: Suit;
-  description: string;
-  meaning: string;
-  reversed: string;
-  title: string;
-  image: string;
-  imageReversed: string;
-  normalizedName: string;
-}
-function draw(card: TarotCard, isReversed = false): DrawnCard {
-  let cardProps = isReversed
-    ? {
-        title: `${card.title} (REVERSED)`,
-        meaning: card.reversed,
-        image: card.imageReversed,
-      }
-    : {
-        title: card.title,
-        meaning: card.meaning,
-        image: card.image,
-      };
-
-  const { imageReversed, reversed, ...newDrawn } = { ...card, ...cardProps };
-  return newDrawn;
-}
-
 function parseCard(
   data: (typeof cardData.major)[number] | (typeof cardData.minor)[number],
 ): TarotCard {
@@ -124,11 +96,10 @@ function getDeck(deck: DeckType): readonly TarotCard[] {
     case 'minor':
       return MINOR_ARCANA;
     case 'all':
-      return { ...MAJOR_ARCANA, ...MINOR_ARCANA };
+      return [...MAJOR_ARCANA, ...MINOR_ARCANA];
   }
 }
 
-type CardParams = Partial<TarotCard & { deckType: DeckType }>;
 
 export function findCards(params: CardParams): Array<TarotCard> | undefined {
   const deck = getDeck(params.deckType ?? 'all');
@@ -157,9 +128,14 @@ export function findSingleCard(params: CardParams): TarotCard | undefined {
   return findCards(params)?.at(0);
 }
 
-export function drawCard(deck: DeckType = 'all'): TarotCard {
+export function drawCard(deck: DeckType = 'all'): TarotCard | undefined {
   const chosenDeck = getDeck(deck);
 
-  const index = Math.random() * chosenDeck.length - 1;
-  return chosenDeck[index];
+  const index = Math.floor(Math.random() * (chosenDeck.length - 1));
+  console.log(`index = ${index}`)
+  const drawn = chosenDeck[index];
+
+  console.log(`drawn = ${drawn}`)
+
+  return drawn;
 }
