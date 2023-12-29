@@ -1,6 +1,4 @@
 .card {
-  width: 200px;
-  height: 250px;
   perspective: 1000px;
   transition: 0.6s;
   transform-style: preserve-3d;
