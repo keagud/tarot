@@ -1,3 +1,14 @@
+@font-face{
+  font-family: 'Vulnus';
+  src: local('Vulnus'), url(./assets/fonts/vulnus.woff2), format('woff');
+}
+
+@font-face{
+  font-family: "wollstonecraft";
+  src: local('wollstonecraft'), url(./assets/fonts/wollstonecraft.woff), format('woff')
+
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

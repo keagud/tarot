@@ -1,8 +1,7 @@
 import rawData from './cards.json';
 
-import type { TarotCard, Suit, RankName, CardParams } from "../../common/types.d.ts"
-export type { TarotCard, Suit, RankName, CardParams } from "../../common/types.d.ts"
-
+import type { TarotCard, Suit, RankName, CardParams } from '../../common/types.d.ts';
+export type { TarotCard, Suit, RankName, CardParams } from '../../common/types.d.ts';
 
 function must<T>(val?: T, message: string | undefined = undefined): NonNullable<T> {
   if (val === null || val === undefined) {
@@ -100,7 +99,6 @@ function getDeck(deck: DeckType): readonly TarotCard[] {
   }
 }
 
-
 export function findCards(params: CardParams): Array<TarotCard> | undefined {
   const deck = getDeck(params.deckType ?? 'all');
   const { deckType, ...searchParams } = params;
@@ -132,10 +130,10 @@ export function drawCard(deck: DeckType = 'all'): TarotCard | undefined {
   const chosenDeck = getDeck(deck);
 
   const index = Math.floor(Math.random() * (chosenDeck.length - 1));
-  console.log(`index = ${index}`)
+  console.log(`index = ${index}`);
   const drawn = chosenDeck[index];
 
-  console.log(`drawn = ${drawn}`)
+  console.log(`drawn = ${drawn}`);
 
   return drawn;
 }
