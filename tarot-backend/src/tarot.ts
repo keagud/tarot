@@ -1,7 +1,7 @@
 import rawData from './cards.json';
 
-import type { TarotCard, Suit, RankName, CardParams } from '../../common/types.d.ts';
-export type { TarotCard, Suit, RankName, CardParams } from '../../common/types.d.ts';
+import type { TarotCard, Suit, CardParams } from '../../common/types.d.ts';
+export type { TarotCard, Suit, CardParams } from '../../common/types.d.ts';
 
 function must<T>(val?: T, message: string | undefined = undefined): NonNullable<T> {
   if (val === null || val === undefined) {
@@ -18,53 +18,6 @@ function dbg<T>(val: T, message: string | undefined = undefined): T {
 
 const cardData = Object.freeze(rawData);
 
-const suits = [
-  'temperance',
-  'high-priestess',
-  'world',
-  'fool',
-  'pentacles',
-  'cups',
-  'hermit',
-  'sun',
-  'swords',
-  'magician',
-  'hanged-man',
-  'chariot',
-  'strength',
-  'death',
-  'moon',
-  'tower',
-  'justice',
-  'star',
-  'lovers',
-  'hierophant',
-  'emperor',
-  'judgment',
-  'wands',
-  'empress',
-  'wheel-of-fortune',
-  'devil',
-] as const;
-
-const ranks = [
-  'ace',
-  'two',
-  'three',
-  'four',
-  'five',
-  'six',
-  'seven',
-  'eight',
-  'nine',
-  'ten',
-  'page',
-  'knight',
-  'queen',
-  'king',
-  'major',
-] as const;
-
 function parseCard(
   data: (typeof cardData.major)[number] | (typeof cardData.minor)[number],
 ): TarotCard {
@@ -76,16 +29,13 @@ function parseCard(
     reversed: data.reversed,
     title: data.title,
     image: data.image,
-    imageReversed: data.imageReversed,
-    normalizedName: data.normalizedName,
-    rankName: must(ranks.at(data.rank - 1)),
+    slug: data.slug,
   } as TarotCard;
 }
 
 export const MAJOR_ARCANA = Object.freeze(cardData.major.map(parseCard));
 export const MINOR_ARCANA = Object.freeze(cardData.minor.map(parseCard));
 
-type DrawnCard = Omit<TarotCard, 'imageReversed' | 'reversed' | 'draw'>;
 export type DeckType = 'major' | 'minor' | 'all';
 
 function getDeck(deck: DeckType): readonly TarotCard[] {

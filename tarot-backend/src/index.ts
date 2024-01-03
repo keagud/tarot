@@ -3,7 +3,7 @@ import express, { Express, Response } from 'express';
 import { findSingleCard, DeckType, drawCard } from './tarot';
 import cors from 'cors';
 
-import type { Suit, RankName, TarotCard } from './tarot';
+import type { Suit, TarotCard } from './tarot';
 
 function handleResponse<R extends Response>(res: R, card?: TarotCard) {
   card === undefined ? res.sendStatus(404) : res.json(card);
@@ -32,16 +32,16 @@ function main() {
   // get a major arcana card by name
   app.get('/cards/major-arcana/:cardName', (req, res) => {
     const { cardName } = req.params;
-    const drawn = findSingleCard({ rankName: 'major', suit: cardName as Suit, deckType: 'major' });
+    const drawn = findSingleCard({ deckType: 'major' });
     handleResponse(res, drawn);
   });
 
   // get a minor arcana card by suit and rank
-  app.get('/cards/minor-arcana/:suit/:rankName', (req, res) => {
-    const { suit, rankName } = req.params;
+  app.get('/cards/minor-arcana/:suit/:rank', (req, res) => {
+    const { suit, rank } = req.params;
     handleResponse(
       res,
-      findSingleCard({ suit: suit as Suit, rankName: rankName as RankName, deckType: 'minor' }),
+      findSingleCard({ suit: suit as Suit, rank: Number(rank), deckType: 'minor' }),
     );
   });
 
