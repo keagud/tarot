@@ -32,8 +32,6 @@ function Card({ title, image }: CardProps) {
 
   const cardBackImage = makeImageUrl('cardback.jpg');
   const cardFrontImage = makeImageUrl(image);
-  const commonCardStyles =
-    'w-full border-tarot-slate rounded-xl border-[20px] shadow-lg shadow-tarot-black';
 
   useEffect(() => {
     setFlipped(false);
@@ -47,15 +45,12 @@ function Card({ title, image }: CardProps) {
   };
 
   return (
-    <div className="w-full m-20 relative h-3/5 max-w-[700px]">
-      <div
-        className={` w-full absolute tarot-green  card ${isFlipped ? 'flipped' : ''}  `}
-        onClick={toggleFlipped}
-      >
-        <div className="card-face front border-tarot-slate rounded-xl border-[2em] outline-offset-[-8] bg-tarot-lightgray">
-          <img src={cardFrontImage} className={'w-full '} style={{ clipPath: 'inset(1.4em)' }} />
+    <div className="card-container">
+      <div className={`  card ${isFlipped ? 'flipped' : 'unflipped'}  `} onClick={toggleFlipped}>
+        <div className="card-face front ">
+          <img src={cardFrontImage} style={{ clipPath: 'inset(1.4em)' }} />
         </div>
-        <div className="card-face back aspect-w-9 aspect-h-15 bg-tarot-orange rounded-xl"></div>
+        <div className="card-face back "></div>
       </div>
     </div>
   );
@@ -108,14 +103,74 @@ function CardText({ title, description, meaning }: CardTextProps) {
   );
 }
 
+function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
+  const [checkedState, setCheckedState] = useState<Array<boolean>>([true, true]);
+
+  const MAJOR_INDEX = 0;
+  const MINOR_INDEX = 1;
+
+  const handleOnChange = (d: typeof MAJOR_INDEX | typeof MINOR_INDEX) => {
+    const newState = [...checkedState];
+    newState[d] = !newState[d];
+
+    // checkbox state can't have both unchecked at once
+    if (!newState.every(x => !x)) {
+      setCheckedState(newState);
+    }
+
+  };
+
+  const getDeck = () => {
+    if (checkedState.every(x => x)) {
+      return 'all'
+    }
+    return checkedState[MAJOR_INDEX] ? 'major' : 'minor'
+
+  };
+
+  return (
+    <>
+      <div className="card-draw-widget">
+        <div>
+          <button onClick={() => onDrawFunc(getDeck())}> Draw </button>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            id="draw-major"
+            name="draw-major"
+            value="major"
+            checked={checkedState[MAJOR_INDEX]}
+            onChange={() => handleOnChange(MAJOR_INDEX)}
+          />
+          <label htmlFor="draw-major">Major Arcana</label>
+
+          <input
+            type="checkbox"
+            id="draw-minor"
+            name="draw-minor"
+            value="minor"
+            checked={checkedState[MINOR_INDEX]}
+            onChange={() => handleOnChange(MINOR_INDEX)}
+          />
+          <label htmlFor="draw-minor">Minor Arcana</label>
+        </div>
+      </div>
+    </>
+  );
+}
+
 function DisplayBox(card: TarotCard) {
   return (
     <>
-      <div className="grid grid-cols-2  w-5/6  my-40 justify-around  gap-3 bg-tarot-lightblue border-4 rounded-lg border-tarot-slate shadow-lg shadow-tarot-black max-w-[2000px]">
-        <div className="col-span-1 flex  place-content-center w-full h-full aspect-w-9 aspect-h-12">
+      <div className="display-box-container ">
+        <div className="content-box">
           <Card image={card.image} title={card.title} />
+
+          <CardDrawWidget onDrawFunc={(f) => { console.log(f) }} />
         </div>
-        <div className="col-span-1 border-l-4 border-tarot-medgray">
+
+        <div className="content-box">
           <CardText title={card.title} meaning={card.meaning} description={card.description} />
         </div>
       </div>
@@ -123,15 +178,6 @@ function DisplayBox(card: TarotCard) {
   );
 }
 
-function DrawCardOptions({ selectFunc }: { selectFunc: (DeckType) => any }) {
-  return (
-    <>
-      <div>
-        <button></button>
-      </div>
-    </>
-  );
-}
 
 function App() {
   const [card, setCard] = useState<TarotCard | undefined>();
@@ -148,11 +194,8 @@ function App() {
   const displayBox = card === undefined ? <div id="card-placeholder" /> : <DisplayBox {...card} />;
   return (
     <>
-      <div className="flex items-center justify-center w-screen">
+      <div className="container">
         <div>{displayBox}</div>
-      </div>
-      <div className="border flex items-center justify-center">
-        <button>foo</button>
       </div>
     </>
   );
