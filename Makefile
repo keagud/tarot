@@ -5,7 +5,7 @@ PORT=5555
 .PHONY: format
 
 dev:
-	(cd ./tarot-backend && npx tsc &&  PORT="$(PORT)" pnpm run serve & echo $$! > ../backend.pid) &\
+	(cd ./tarot-backend && npx tsc &&  PORT="$(PORT)" DEBUG=express:* pnpm run serve & echo $$! > ../backend.pid) &\
 		(cd ./tarot-frontend &&  echo "{  \"port\" : \"$(PORT)\" }" > port.json &&  pnpm run dev || (kill `cat ../backend.pid` && rm ../backend.pid -f))
 
 backend:
