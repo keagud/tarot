@@ -1,6 +1,6 @@
 //import Card from "./Card";
 import { TarotCard, apiFetch, makeImageUrl, DeckType } from './api';
-import { useState, useEffect, JSX, useRef, Component, ReactNode } from 'react';
+import { useState, useEffect, useTransition, useReducer, JSX, useRef, useMemo, Component, ReactNode } from 'react';
 
 import './Card.css';
 import _ from 'lodash';
@@ -25,34 +25,66 @@ const getMask = (
 interface CardProps {
   title: string;
   image: string;
+  isReversed: boolean;
 }
 
+
+
 function Card({ title, image }: CardProps) {
-  const [isFlipped, setFlipped] = useState(true);
+
+  const transitionDuration = 0.9;
+  const transitionDelay = 300;
+
+
+  const [isFaceUp, setFaceUp] = useState(false);
+
+  const [displayIsFaceup, setDisplayIsFaceup] = useState(false);
+
+
+  const [displayImage, setDisplayImage] = useState<string>(image);
+
 
   const cardBackImage = makeImageUrl('cardback.jpg');
-  const cardFrontImage = makeImageUrl(image);
+
 
   useEffect(() => {
-    setFlipped(false);
-    setTimeout(() => setFlipped(true), 300);
-  }, []);
+    setFaceUp(false);
+  }, [image]);
 
-  console.log(cardFrontImage);
+  useEffect(() => {
+    if (!displayIsFaceup) setFaceUp(true);
 
-  const toggleFlipped = () => {
-    setFlipped(!isFlipped);
+  }, [])
+
+  const toggleFaceup = () => {
+    setFaceUp(!isFaceUp);
   };
 
   return (
     <div className="card-container">
-      <div className={`  card ${isFlipped ? 'flipped' : 'unflipped'}  `} onClick={toggleFlipped}>
+      <div
+      
+        
+        className={`  card ${isFaceUp ? 'faceup' : ''}  `}
+        style={{ transition: `${transitionDuration}s` }}
+        onTransitionEnd={() => {
+          setDisplayIsFaceup(isFaceUp)
+
+          if (!displayIsFaceup) {
+            setDisplayImage(image);
+
+          }
+
+        }
+        }
+        onClick={toggleFaceup}
+      >
         <div className="card-face front ">
-          <img src={cardFrontImage} style={{ clipPath: 'inset(1.4em)' }} />
+          <img src={makeImageUrl(displayImage)} style={{ clipPath: 'inset(1.4em)' }} />
         </div>
         <div className="card-face back "></div>
       </div>
-    </div>
+    </div >
   );
 }
 
@@ -114,18 +146,16 @@ function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
     newState[d] = !newState[d];
 
     // checkbox state can't have both unchecked at once
-    if (!newState.every(x => !x)) {
+    if (!newState.every((x) => !x)) {
       setCheckedState(newState);
     }
-
   };
 
   const getDeck = () => {
-    if (checkedState.every(x => x)) {
-      return 'all'
+    if (checkedState.every((x) => x)) {
+      return 'all';
     }
-    return checkedState[MAJOR_INDEX] ? 'major' : 'minor'
-
+    return checkedState[MAJOR_INDEX] ? 'major' : 'minor';
   };
 
   return (
@@ -160,42 +190,42 @@ function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
   );
 }
 
-function DisplayBox(card: TarotCard) {
-  return (
-    <>
-      <div className="display-box-container ">
-        <div className="content-box">
-          <Card image={card.image} title={card.title} />
-
-          <CardDrawWidget onDrawFunc={(f) => { console.log(f) }} />
-        </div>
-
-        <div className="content-box">
-          <CardText title={card.title} meaning={card.meaning} description={card.description} />
-        </div>
-      </div>
-    </>
-  );
-}
-
-
 function App() {
+  const reversedChance = 0.3;
+  const rollReversed = () => Math.random() < reversedChance;
+
   const [card, setCard] = useState<TarotCard | undefined>();
+  const [isReversed, setReversed] = useState(rollReversed());
+
+  const getCard = async (deck: DeckType) => {
+    const fetchedCard = await apiFetch(`/draw/${deck}`);
+
+    setReversed(rollReversed);
+    setCard(fetchedCard);
+  };
 
   useEffect(() => {
-    const getCard = async () => {
-      const fetchedCard = await apiFetch('/draw/all');
-      setCard(fetchedCard);
-    };
-
-    getCard();
+    getCard('all');
   }, []);
 
-  const displayBox = card === undefined ? <div id="card-placeholder" /> : <DisplayBox {...card} />;
+  if (card === undefined) {
+    return <div id="card-placeholder" />;
+  }
+
   return (
     <>
       <div className="container">
-        <div>{displayBox}</div>
+        <div className="display-box-container ">
+          <div className="content-box">
+            <Card image={card.image} title={card.title} />
+
+            <CardDrawWidget onDrawFunc={getCard} />
+          </div>
+
+          <div className="content-box">
+            <CardText title={card.title} meaning={card.meaning} description={card.description} />
+          </div>
+        </div>
       </div>
     </>
   );
@@ -221,7 +251,7 @@ function FadeInText({ children }: { children: ReactNode }) {
         cancelAnimationFrame(requestRef.current);
       };
     }
-  }, []);
+  }, [children]);
 
   return (
     <>

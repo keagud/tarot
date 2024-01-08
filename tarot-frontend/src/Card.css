@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.card.flipped {
+.card.faceup {
   transform: rotateY(180deg);
 }
 .card-face {
