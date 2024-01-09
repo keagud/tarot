@@ -1,9 +1,19 @@
 //import Card from "./Card";
 import { TarotCard, apiFetch, makeImageUrl, DeckType } from './api';
-import { useState, useEffect, useTransition, useReducer, JSX, useRef, useMemo, Component, ReactNode } from 'react';
+import {
+  useState,
+  useEffect,
+  useTransition,
+  useReducer,
+  JSX,
+  useRef,
+  useMemo,
+  Component,
+  ReactNode,
+} from 'react';
 
 import './Card.css';
-import _ from 'lodash';
+import _, { get } from 'lodash';
 
 const getMask = (
   [start, end]: [number, number],
@@ -28,63 +38,35 @@ interface CardProps {
   isReversed: boolean;
 }
 
-
-
 function Card({ title, image }: CardProps) {
+  const animationSecs = 0.7;
 
-  const transitionDuration = 0.9;
-  const transitionDelay = 300;
+  const [isFlipping, setIsFlipping] = useState(true);
 
-
-  const [isFaceUp, setFaceUp] = useState(false);
-
-  const [displayIsFaceup, setDisplayIsFaceup] = useState(false);
-
-
-  const [displayImage, setDisplayImage] = useState<string>(image);
-
-
-  const cardBackImage = makeImageUrl('cardback.jpg');
-
+  const displayImage = useRef<string>(image);
 
   useEffect(() => {
-    setFaceUp(false);
+    setIsFlipping(true);
+
+    setTimeout(() => {
+      displayImage.current = image;
+      setIsFlipping(false);
+    }, animationSecs * 1000);
   }, [image]);
-
-  useEffect(() => {
-    if (!displayIsFaceup) setFaceUp(true);
-
-  }, [])
-
-  const toggleFaceup = () => {
-    setFaceUp(!isFaceUp);
-  };
 
   return (
     <div className="card-container">
-      <div
-      
-        
-        className={`  card ${isFaceUp ? 'faceup' : ''}  `}
-        style={{ transition: `${transitionDuration}s` }}
-        onTransitionEnd={() => {
-          setDisplayIsFaceup(isFaceUp)
-
-          if (!displayIsFaceup) {
-            setDisplayImage(image);
-
-          }
-
-        }
-        }
-        onClick={toggleFaceup}
-      >
-        <div className="card-face front ">
-          <img src={makeImageUrl(displayImage)} style={{ clipPath: 'inset(1.4em)' }} />
+      <div className={`  card ${isFlipping ? 'card flipping' : 'card'}  `}>
+        <div className="front " style={{ transition: `transform ${animationSecs}s` }}>
+          <img src={makeImageUrl(displayImage.current)} />
         </div>
-        <div className="card-face back "></div>
+
+        <div
+          className="back bg-tarot-orange "
+          style={{ transition: `transform ${animationSecs}s` }}
+        ></div>
       </div>
-    </div >
+    </div>
   );
 }
 
@@ -198,14 +180,21 @@ function App() {
   const [isReversed, setReversed] = useState(rollReversed());
 
   const getCard = async (deck: DeckType) => {
-    const fetchedCard = await apiFetch(`/draw/${deck}`);
-
-    setReversed(rollReversed);
-    setCard(fetchedCard);
+    await apiFetch(`/draw/${deck}`).then((c) => {
+      setCard(c);
+      console.log(`GOT: ${c.title}`);
+      console.log(`SET CARD IS: ${card?.title}`);
+      setReversed(rollReversed);
+    });
   };
 
+  const initialized = useRef(false);
+
   useEffect(() => {
-    getCard('all');
+    if (!initialized.current) {
+      initialized.current = true;
+      getCard('all');
+    }
   }, []);
 
   if (card === undefined) {
@@ -217,7 +206,7 @@ function App() {
       <div className="container">
         <div className="display-box-container ">
           <div className="content-box">
-            <Card image={card.image} title={card.title} />
+            <Card image={card.image} title={card.title} isReversed={false} />
 
             <CardDrawWidget onDrawFunc={getCard} />
           </div>

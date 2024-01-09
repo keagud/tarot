@@ -1,5 +1,5 @@
-import type { TarotCard, RankName, Suit, CardParams, DeckType } from '../../common/types.d.ts';
-export type { CardParams, TarotCard, RankName, Suit, DeckType } from '../../common/types.d.ts';
+import type { TarotCard, Suit, CardParams, DeckType } from '../../common/types.d.ts';
+export type { CardParams, TarotCard, Suit, DeckType } from '../../common/types.d.ts';
 
 import { port } from '../port.json';
 
