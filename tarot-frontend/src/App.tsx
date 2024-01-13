@@ -17,7 +17,7 @@ import _, { get } from 'lodash';
 
 const getMask = (
   [start, end]: [number, number],
-  step: number = 1,
+  step: number = .3,
   gap: number = 50,
 ): [number, number] => {
   const satsub = (n: number) => Math.max(0, n - step);
@@ -41,44 +41,85 @@ interface CardTextProps {
 }
 
 function CardText({ title, description, meaning }: CardTextProps) {
+
+  const [runAnimation, setRunAnimation] = useState(true);
+
+  const [[gradientStart, gradientEnd], setGradient] = useState<[number, number]>([100, 100]);
+  const requestRef = useRef<number>(0);
+
+  const updateGradient = () => {
+    setGradient(([s, e]) => getMask([s, e]));
+    requestRef.current = requestAnimationFrame(updateGradient);
+  };
+
+  const resetAnimation = () => {
+    setGradient([100, 100]);
+    requestRef.current = 0;
+  }
+
+
+  useEffect(() => {
+    requestRef.current = requestAnimationFrame(updateGradient);
+
+    if (requestRef.current != undefined) {
+      setRunAnimation(false);
+      return () => {
+        cancelAnimationFrame(requestRef.current);
+        resetAnimation();
+      };
+    }
+  }, [title, description, meaning]);
+
   return (
     <>
-      <div className="font-sans m-10 leading-loose  text-tarot-jet">
-        <div>
-          <h1
-            className="underline text-center outline-tarot-yellow"
-            style={{ fontFamily: 'Vulnus', fontSize: '3.5em' }}
-          >
-            {title.toUpperCase()}
-          </h1>
-        </div>
+      <div
+        style={{
+          maskImage: `linear-gradient(0deg, transparent ${gradientStart}%, black ${gradientEnd}%`,
+        }}
+      >
 
-        <FadeInText>
-          <div>
-            <br />
-            <div
-              className="text-center m-10"
-              style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em' }}
-            >
-              <p> {meaning}</p>
+
+
+
+        <>
+          <div className="font-sans m-10 leading-loose  text-tarot-jet">
+            <div>
+              <h1
+                className="underline text-center outline-tarot-yellow"
+                style={{ fontFamily: 'Vulnus', fontSize: '3.5em' }}
+              >
+                {title.toUpperCase()}
+              </h1>
             </div>
-            <br />
-            <div
-              className="m-10 overflow-scroll"
-              style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em', fontStyle: 'italic' }}
-            >
-              <FadeInText>
+
+            <div>
+              <br />
+              <div
+                className="text-center m-10"
+                style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em' }}
+              >
+                <p> {meaning}</p>
+              </div>
+              <br />
+              <div
+                className="m-10 overflow-scroll"
+                style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em', fontStyle: 'italic' }}
+              >
                 {' '}
                 <>
                   <p> {description} </p>{' '}
                 </>
-              </FadeInText>
+              </div>
             </div>
           </div>
-        </FadeInText>
+        </>
+
+
       </div>
     </>
   );
+
+
 }
 
 function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
@@ -185,6 +226,7 @@ function App() {
 }
 
 function FadeInText({ children }: { children: ReactNode }) {
+
   const [runAnimation, setRunAnimation] = useState(true);
 
   const [[gradientStart, gradientEnd], setGradient] = useState<[number, number]>([100, 100]);
