@@ -2,7 +2,7 @@ import path from 'path';
 import express, { Express, Response } from 'express';
 import { findSingleCard, DeckType, drawCard } from './tarot';
 import morgan from 'morgan';
-//import cors from 'cors';
+import cors from 'cors';
 
 import type { Suit, TarotCard } from './tarot';
 
@@ -18,7 +18,11 @@ function main() {
   const port = process.env.PORT ?? '8080';
   console.log(`Using port ${port}`);
 
-  //app.use(cors());
+  if (process.env.NODE_ENV != "production") {
+    app.use(cors());
+  }
+
+
 
   const staticDir = process.env.STATIC_DIR ?? path.resolve(process.cwd() + '/static/');
   console.log(`static directory = ${staticDir}`);

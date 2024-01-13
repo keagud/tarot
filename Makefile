@@ -1,4 +1,4 @@
-PORT=5555
+PORT=8080
 
 .PHONY: build
 .PHONY: dev

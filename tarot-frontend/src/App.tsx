@@ -1,4 +1,5 @@
-//import Card from "./Card";
+import "./App.css"
+import Card, { CardBack } from "./Card";
 import { TarotCard, apiFetch, makeImageUrl, DeckType } from './api';
 import {
   useState,
@@ -12,7 +13,6 @@ import {
   ReactNode,
 } from 'react';
 
-import './Card.css';
 import _, { get } from 'lodash';
 
 const getMask = (
@@ -32,43 +32,7 @@ const getMask = (
   }
 };
 
-interface CardProps {
-  title: string;
-  image: string;
-  isReversed: boolean;
-}
 
-function Card({ title, image }: CardProps) {
-  const animationSecs = 0.7;
-
-  const [isFlipping, setIsFlipping] = useState(true);
-
-  const displayImage = useRef<string>(image);
-
-  useEffect(() => {
-    setIsFlipping(true);
-
-    setTimeout(() => {
-      displayImage.current = image;
-      setIsFlipping(false);
-    }, animationSecs * 1000);
-  }, [image]);
-
-  return (
-    <div className="card-container">
-      <div className={`  card ${isFlipping ? 'card flipping' : 'card'}  `}>
-        <div className="front " style={{ transition: `transform ${animationSecs}s` }}>
-          <img src={makeImageUrl(displayImage.current)} />
-        </div>
-
-        <div
-          className="back bg-tarot-orange "
-          style={{ transition: `transform ${animationSecs}s` }}
-        ></div>
-      </div>
-    </div>
-  );
-}
 
 interface CardTextProps {
   title: string;
@@ -206,7 +170,7 @@ function App() {
       <div className="container">
         <div className="display-box-container ">
           <div className="content-box">
-            <Card image={card.image} title={card.title} isReversed={false} />
+            <Card image={card.image} isReversed={false} />
 
             <CardDrawWidget onDrawFunc={getCard} />
           </div>
@@ -253,6 +217,18 @@ function FadeInText({ children }: { children: ReactNode }) {
       </div>
     </>
   );
+}
+
+
+function _App() {
+
+
+  return (
+    <div style={{ aspectRatio: 9 / 15, height: 1000 }}>
+      <CardBack />
+    </div>
+  )
+
 }
 
 export default App;

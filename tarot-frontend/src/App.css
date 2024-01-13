@@ -1,43 +1,90 @@
+@import "theme.css";
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.content-box {
+  min-width: 40%;
+
+  border: 5px solid red;
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card-container {
+/*  margin: 5rem; */
+  position: relative;
+  max-width: 700px;
+  height: 100%;
+  
+  aspect-ratio: 9/16;
+  border: 5px solid var(--tarot-red);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.card-area-container {
+  /*place-content: center;*/
+  min-width: 40%;
 }
 
-.card {
-  padding: 2em;
+.display-box-container {
+  display:flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.read-the-docs {
-  color: #888;
+.container_ {
+
+  display: flex;
+  justify-content: center;
+  margin-left: 20%;
+  margin-right: 20%;
+  width:100%;
+  height: 100%;
+
+  border: 5px solid var(--tarot-green);
+
 }
+
+.card-draw-widget {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 1px solid var(--tarot-lightblue);
+}
+
+.card-draw-widget button {
+  font-family: "Vulnus";
+  font-size: 2em;
+
+
+  border: 2px solid var(--tarot-orange);
+
+
+}
+
+
+body {
+  display: flex;
+  
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+
+
+
+.fade-in-text {
+  animation-name: fadein;
+  animation-duration: 10s;
+}
+
+
+
+@keyframes fadein {
+  from { color: transparent; }
+   to { color: black; }
+
+}
+
+
