@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { makeImageUrl } from "./api";
-import "./Card.css"
+//import "./Card.css"
 
 
 // SVG for the card back image
@@ -28,12 +28,12 @@ export function CardBack() {
       <svg version="1.1" width={"100%"} height={"100%"} xmlns="http://www.w3.org/2000/svg" viewBox={"0 0  100% 100%"} >
         <rect width={"100%"} height={"100%"} fill={'black'} />
         <svg viewBox={`0 0 ${innerSvgSize} ${innerSvgSize}`} >
-          <g stroke="white" strokeWidth={3} transform="translate(50%,50%)">
-            {circles}
-          </g>
-        </svg>
+          <g stroke="white" strokeWidth={2} transform={"translate(\"50%\", \"50%\")"}>
+          {circles}
+        </g>
       </svg>
-    </div>
+    </svg>
+    </div >
   )
 }
 
