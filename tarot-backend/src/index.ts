@@ -1,27 +1,30 @@
 import path from 'path';
 import express, { Express, Response } from 'express';
 import { findSingleCard, DeckType, drawCard } from './tarot';
-import cors from 'cors';
+import morgan from 'morgan';
+//import cors from 'cors';
 
 import type { Suit, TarotCard } from './tarot';
 
 function handleResponse<R extends Response>(res: R, card?: TarotCard) {
   card === undefined ? res.sendStatus(404) : res.json(card);
-  console.log(card);
+  console.log(card ?? "UNDEFINED");
   res.end();
   return res;
 }
 
 function main() {
   const app: Express = express();
-  const port = process.env.PORT ?? '3000';
+  const port = process.env.PORT ?? '8080';
+  console.log(`Using port ${port}`);
 
-  app.use(cors());
+  //app.use(cors());
 
-  const staticDir = path.resolve(process.cwd() + '/public/');
+  const staticDir = process.env.STATIC_DIR ?? path.resolve(process.cwd() + '/static/');
   console.log(`static directory = ${staticDir}`);
 
   app.use(express.static(staticDir));
+  app.use(morgan('dev'));
 
   //get a random card from :deck
   app.get('/draw/:deck', (req, res) => {

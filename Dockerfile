@@ -10,51 +10,69 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python3
 
 RUN npm install -g pnpm vite typescript
-
-
-# copy common deps
-WORKDIR /app
-COPY tsconfig.json /app/ 
-COPY common/ /app/common/ 
-
+WORKDIR /build
 
 # install dependencies for the server
-
-WORKDIR /app
-COPY tarot-backend/package*.json ./server/
-WORKDIR /app/server/
+WORKDIR /build/server/
+COPY tarot-backend/package*.json .
 RUN pnpm install
 
 
 # install dependencies for the frontend
-WORKDIR /app
-COPY tarot-frontend/package*.json ./web/
-WORKDIR /app/web/
+WORKDIR /build/web/
+COPY --link tarot-frontend/package*.json .
 RUN pnpm install 
+
+# copy common deps
+WORKDIR /build/common
+COPY ./common/ .
+WORKDIR /build
+COPY tsconfig.json  .
 
 
 # build server
-WORKDIR /app
-COPY tarot-backend/ ./server/
-WORKDIR /app/server
+WORKDIR /build
+COPY --link ./tarot-backend/ /build/server
+WORKDIR /build/server
 RUN pnpm build
+RUN pnpm prune
 
 
 #build frontend
-WORKDIR /app
-COPY tarot-frontend/ ./web/
-WORKDIR /app/web
+WORKDIR /build
+COPY tarot-frontend/ /build/web
+WORKDIR /build/web
 RUN vite build
+RUN pnpm prune
 
 
 
 ## Runtime
 FROM nginx:1.24.0-alpine-slim
+WORKDIR /app
+RUN apk add nodejs 
 
-WORKDIR /app/server
+#copy static files
+COPY --link ./tarot-backend/static /app/static
+ENV STATIC_DIR="/app/static"
 
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# copy generated js for the server
+COPY --link --from=build /build/server/dist /app/server
 
 # copy frontend build assets
+COPY --link --from=build /build/web/dist /usr/share/nginx/html
 
-COPY --from=build /app/web/dist /usr/share/nginx/html
+# setup runtime node environment
+COPY --link ./tarot-backend/package.json .
+COPY --link ./tarot-backend/pnpm-lock.yaml .
+COPY --link --from=build /build/server/node_modules /app/node_modules
+
+EXPOSE 80
+
+# copy and run the startup script
+COPY ./run.sh .
+RUN chmod +x run.sh
+#CMD ["./run.sh"]
 

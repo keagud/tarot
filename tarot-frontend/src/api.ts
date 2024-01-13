@@ -4,7 +4,8 @@ export type { CardParams, TarotCard, Suit, DeckType } from '../../common/types.d
 import { port } from '../port.json';
 
 function getAPIUrl() {
-  return `http://localhost:${port}`;
+//  return `http://localhost:${port}`;
+  return "/api"
 }
 
 const apiUrl = getAPIUrl();

@@ -4,7 +4,8 @@
   },
   "extends": "../tsconfig.json",
   "include": [
-    "src/**/*.ts",
-    "src/**/*.json"
+    "./src/**/*.ts",
+    "./src/**/*.json",
+    "../common/*"
   ],
 }

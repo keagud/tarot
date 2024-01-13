@@ -180,12 +180,12 @@ function App() {
   const [isReversed, setReversed] = useState(rollReversed());
 
   const getCard = async (deck: DeckType) => {
-    await apiFetch(`/draw/${deck}`).then((c) => {
-      setCard(c);
-      console.log(`GOT: ${c.title}`);
-      console.log(`SET CARD IS: ${card?.title}`);
-      setReversed(rollReversed);
-    });
+    let drawnCard = await apiFetch(`/draw/${deck}`);
+
+    setCard(drawnCard);
+    console.log(`GOT: ${drawnCard.title}`);
+    console.log(`SET CARD IS: ${card?.title}`);
+    setReversed(rollReversed);
   };
 
   const initialized = useRef(false);
