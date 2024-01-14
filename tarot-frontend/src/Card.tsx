@@ -36,6 +36,13 @@ export function CardBack() {
         <svg viewBox={`0 0 ${innerSvgSize} ${innerSvgSize}`}>
           <g stroke="white" strokeWidth={2} transform={'translate("50%", "50%")'}>
             {circles}
+            <circle
+              className="center-circle"
+              cx={centerX}
+              cy={centerY}
+              r={radius}
+              fill="transparent"
+            />
           </g>
         </svg>
       </svg>

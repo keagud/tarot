@@ -1,15 +1,12 @@
 @import "theme.css";
 
-* + * {
-	margin-top: 1.5em;
-}
-
 .content-box {
   min-width: 40%;
 
   display: inline-block;
   height: 100%;
   width: 100%;
+  margin-bottom: 20%;
 
 }
 
@@ -19,7 +16,7 @@
   max-width: 700px;
   height: 100%;
   
-  aspect-ratio: 9/16;
+  aspect-ratio: 9/15;
 }
 
 .card-area-container {
@@ -33,23 +30,80 @@
   width: 100%;
 }
 
+.card-text-box {
+  text-align: center;
+
+}
+
 .card-draw-widget {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
+  column-gap: 10px;
+  padding-top: 5%;
+  margin-top: 1.5em;
+  padding-bottom: 5%;
 }
 
-.card-draw-widget button {
+.draw-button {
   font-family: "Vulnus";
   font-size: 2em;
-
-
-
+  height: 100%;
+  background-color: var(--tarot-red);
+  text-shadow: 0 0 5px var(--tarot-offwhite);
+  color: var(--tarot-black);
+  width: 50%;
+  text-align: center;
+  border: 2px solid var(--tarot-slate);
+   padding-top: 2%;  
+  padding-bottom: 2%;
+  border-radius: .75rem;
+  box-shadow: 2px 2px 2px var(--tarot-black);
 
 }
+
+
+.deck-select-opts {
+  font-family: "wollstonecraft";
+  font-size: 1.2em;
+}
+
+.deck-select {
+  align-content: center;
+  margin-bottom: 2%;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+
+.checkmark {
+  top: 0;
+  left: 0;
+  height: 20px;
+
+}
+
+.deck-checkbox.checked {
+  accent-color: var(--tarot-crimson);
+  background-color: var(--tarot-crimson);
+
+}
+
+
+
+.deck-select input[type="checkbox"] {
+  transform: scale(2);
+  margin-right: 1.5em;
+}
+
 
 
 body {
+  background: linear-gradient(
+    var(--tarot-lightblue) , 
+    var(--tarot-offwhite) 60%,
+    var(--tarot-peach) 200%
+    );
+
   display: flex;
   
   flex-direction: row;
@@ -76,11 +130,15 @@ body {
 /********************/
 
 svg rect {
-  fill: var(--tarot-green);
+  fill: var(--tarot-red);
 
 }
 svg circle {
-  stroke: var(--tarot-crimson);
+  stroke: var(--tarot-offwhite);
+}
+
+svg circle.center-circle {
+  stroke: var(--tarot-yellow);
 }
 
 .card {

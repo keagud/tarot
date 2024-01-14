@@ -93,6 +93,8 @@ function CardText({ title, description, meaning }: CardTextProps) {
                 <p> {meaning}</p>
               </div>
               <br />
+              <span className="dingbat">❂❂❂</span>
+
               <div
                 className="m-10 overflow-scroll"
                 style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em', fontStyle: 'italic' }}
@@ -136,29 +138,40 @@ function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
   return (
     <>
       <div className="card-draw-widget">
-        <div>
-          <button onClick={() => onDrawFunc(getDeck())}> Draw </button>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            id="draw-major"
-            name="draw-major"
-            value="major"
-            checked={checkedState[MAJOR_INDEX]}
-            onChange={() => handleOnChange(MAJOR_INDEX)}
-          />
-          <label htmlFor="draw-major">Major Arcana</label>
+        <button className="draw-button" onClick={() => onDrawFunc(getDeck())}>
+          {' '}
+          <div className="draw-button-text">Draw</div>{' '}
+        </button>
+        <div className="deck-select-opts">
+          <div className="deck-select">
+            <label className="checkbox">
+              <input
+                type="checkbox"
+                className={`deck-checkbox ${checkedState[MAJOR_INDEX] ? 'checked' : ''}`}
+                id="draw-major"
+                name="draw-major"
+                value="major"
+                checked={checkedState[MAJOR_INDEX]}
+                onChange={() => handleOnChange(MAJOR_INDEX)}
+              />
+              Major Arcana
+            </label>
+          </div>
 
-          <input
-            type="checkbox"
-            id="draw-minor"
-            name="draw-minor"
-            value="minor"
-            checked={checkedState[MINOR_INDEX]}
-            onChange={() => handleOnChange(MINOR_INDEX)}
-          />
-          <label htmlFor="draw-minor">Minor Arcana</label>
+          <div className="deck-select">
+            <label className="checkbox">
+              <input
+                type="checkbox"
+                className={`deck-checkbox ${checkedState[MINOR_INDEX] ? 'checked' : ''}`}
+                id="draw-minor"
+                name="draw-minor"
+                value="minor"
+                checked={checkedState[MINOR_INDEX]}
+                onChange={() => handleOnChange(MINOR_INDEX)}
+              />
+              Minor Arcana
+            </label>
+          </div>
         </div>
       </div>
     </>
@@ -198,61 +211,18 @@ function App() {
     <>
       <div className="container">
         <div className="display-box-container ">
-          <div className="content-box">
+          <div className="content-box card-art-box">
             <Card image={card.image} isReversed={false} />
 
             <CardDrawWidget onDrawFunc={getCard} />
           </div>
 
-          <div className="content-box">
+          <div className="content-box card-text-box">
             <CardText title={card.title} meaning={card.meaning} description={card.description} />
           </div>
         </div>
       </div>
     </>
-  );
-}
-
-function FadeInText({ children }: { children: ReactNode }) {
-  const [runAnimation, setRunAnimation] = useState(true);
-
-  const [[gradientStart, gradientEnd], setGradient] = useState<[number, number]>([100, 100]);
-  const requestRef = useRef<number>(0);
-
-  const updateGradient = () => {
-    setGradient(([s, e]) => getMask([s, e]));
-    requestRef.current = requestAnimationFrame(updateGradient);
-  };
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(updateGradient);
-
-    if (requestRef.current != undefined) {
-      setRunAnimation(false);
-      return () => {
-        cancelAnimationFrame(requestRef.current);
-      };
-    }
-  }, [children]);
-
-  return (
-    <>
-      <div
-        style={{
-          maskImage: `linear-gradient(0deg, transparent ${gradientStart}%, black ${gradientEnd}%`,
-        }}
-      >
-        {children}
-      </div>
-    </>
-  );
-}
-
-function _App() {
-  return (
-    <div style={{ aspectRatio: 9 / 15, height: 1000 }}>
-      <CardBack />
-    </div>
   );
 }
 
