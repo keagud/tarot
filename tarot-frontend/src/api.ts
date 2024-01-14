@@ -1,15 +1,12 @@
 import type { TarotCard, Suit, CardParams, DeckType } from '../../common/types.d.ts';
 export type { CardParams, TarotCard, Suit, DeckType } from '../../common/types.d.ts';
 
-import { port } from '../port.json';
-
 function getAPIUrl() {
-
   if (import.meta.env.PROD) {
-    return "/api"
+    return '/api';
   } else {
-
-    return `http://localhost:8080`;
+    const port = import.meta.env.VITE_PORT ?? '8080';
+    return `http://localhost:${port}/api`;
   }
 }
 

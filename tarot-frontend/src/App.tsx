@@ -1,5 +1,5 @@
-import "./App.css"
-import Card, { CardBack } from "./Card";
+import './App.css';
+import Card, { CardBack } from './Card';
 import { TarotCard, apiFetch, makeImageUrl, DeckType } from './api';
 import {
   useState,
@@ -17,7 +17,7 @@ import _, { get } from 'lodash';
 
 const getMask = (
   [start, end]: [number, number],
-  step: number = .3,
+  step: number = 0.3,
   gap: number = 50,
 ): [number, number] => {
   const satsub = (n: number) => Math.max(0, n - step);
@@ -32,8 +32,6 @@ const getMask = (
   }
 };
 
-
-
 interface CardTextProps {
   title: string;
   description: string;
@@ -41,7 +39,6 @@ interface CardTextProps {
 }
 
 function CardText({ title, description, meaning }: CardTextProps) {
-
   const [runAnimation, setRunAnimation] = useState(true);
 
   const [[gradientStart, gradientEnd], setGradient] = useState<[number, number]>([100, 100]);
@@ -55,8 +52,7 @@ function CardText({ title, description, meaning }: CardTextProps) {
   const resetAnimation = () => {
     setGradient([100, 100]);
     requestRef.current = 0;
-  }
-
+  };
 
   useEffect(() => {
     requestRef.current = requestAnimationFrame(updateGradient);
@@ -77,10 +73,6 @@ function CardText({ title, description, meaning }: CardTextProps) {
           maskImage: `linear-gradient(0deg, transparent ${gradientStart}%, black ${gradientEnd}%`,
         }}
       >
-
-
-
-
         <>
           <div className="font-sans m-10 leading-loose  text-tarot-jet">
             <div>
@@ -113,13 +105,9 @@ function CardText({ title, description, meaning }: CardTextProps) {
             </div>
           </div>
         </>
-
-
       </div>
     </>
   );
-
-
 }
 
 function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
@@ -226,7 +214,6 @@ function App() {
 }
 
 function FadeInText({ children }: { children: ReactNode }) {
-
   const [runAnimation, setRunAnimation] = useState(true);
 
   const [[gradientStart, gradientEnd], setGradient] = useState<[number, number]>([100, 100]);
@@ -261,16 +248,12 @@ function FadeInText({ children }: { children: ReactNode }) {
   );
 }
 
-
 function _App() {
-
-
   return (
     <div style={{ aspectRatio: 9 / 15, height: 1000 }}>
       <CardBack />
     </div>
-  )
-
+  );
 }
 
 export default App;
