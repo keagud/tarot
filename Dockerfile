@@ -15,13 +15,13 @@ WORKDIR /build
 
 # install dependencies for the server
 WORKDIR /build/server/
-COPY tarot-backend/package*.json .
+COPY server/package*.json .
 RUN pnpm install
 
 
 # install dependencies for the frontend
 WORKDIR /build/web/
-COPY --link tarot-frontend/package*.json .
+COPY --link web/package*.json .
 RUN pnpm install 
 
 # copy common deps
@@ -33,7 +33,7 @@ COPY tsconfig.json  .
 
 # build server
 WORKDIR /build
-COPY --link ./tarot-backend/ /build/server
+COPY --link ./server/ /build/server
 WORKDIR /build/server
 RUN pnpm build
 RUN pnpm prune
@@ -41,7 +41,7 @@ RUN pnpm prune
 
 #build frontend
 WORKDIR /build
-COPY tarot-frontend/ /build/web
+COPY web/ /build/web
 WORKDIR /build/web
 RUN vite build
 RUN pnpm prune
@@ -54,7 +54,7 @@ WORKDIR /app
 RUN apk add nodejs 
 
 #copy static files
-COPY --link ./tarot-backend/static /app/static
+COPY --link ./server/static /app/static
 ENV STATIC_DIR="/app/static"
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
@@ -66,8 +66,8 @@ COPY --link --from=build /build/server/dist /app/server
 COPY --link --from=build /build/web/dist /usr/share/nginx/html
 
 # setup runtime node environment
-COPY --link ./tarot-backend/package.json .
-COPY --link ./tarot-backend/pnpm-lock.yaml .
+COPY --link ./server/package.json .
+COPY --link ./server/pnpm-lock.yaml .
 COPY --link --from=build /build/server/node_modules /app/node_modules
 
 EXPOSE 80
