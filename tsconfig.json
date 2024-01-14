@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-
-
   "composite": true,
     "target": "ES2015",
     "useDefineForClassFields": true,
@@ -10,7 +8,6 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "module": "CommonJS",
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

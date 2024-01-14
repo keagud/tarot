@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext"
   },
+
   "extends": "../tsconfig.json",
   "include": [
     "./src/**/*.ts",

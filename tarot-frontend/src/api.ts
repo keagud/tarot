@@ -4,8 +4,13 @@ export type { CardParams, TarotCard, Suit, DeckType } from '../../common/types.d
 import { port } from '../port.json';
 
 function getAPIUrl() {
-  return `http://localhost:8080`;
-  return "/api"
+
+  if (import.meta.env.PROD) {
+    return "/api"
+  } else {
+
+    return `http://localhost:8080`;
+  }
 }
 
 const apiUrl = getAPIUrl();

@@ -4,6 +4,7 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    "module": "ESNext",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
