@@ -92,7 +92,7 @@ function CardText({ title, description, meaning }: CardTextProps) {
               </h1>
             </div>
 
-            <div>
+            <div onClick={() => setGradient([0, 0])}>
               <br />
               <div
                 className="text-center m-10"

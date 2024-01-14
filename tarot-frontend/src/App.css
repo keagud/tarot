@@ -76,11 +76,11 @@ body {
 /********************/
 
 svg rect {
-  fill: var(--tarot-lightblue);
+  fill: var(--tarot-green);
 
 }
 svg circle {
-  stroke: var(--tarot-orange);
+  stroke: var(--tarot-crimson);
 }
 
 .card {
@@ -129,9 +129,11 @@ svg circle {
 }
 
 
+ /* e0cfbe */
 .card .front {
   transform: rotateY(0);
-   background-color: rgb(224 221 219 ); 
+   /* background-color: rgb(224 221 219 );  */
+  background-color: #F3E5DA;
 
 }
 
