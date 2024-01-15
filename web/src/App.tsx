@@ -209,8 +209,7 @@ function App() {
 
   return (
     <>
-      <div className="container">
-        <div className="display-box-container ">
+      <div className="container display-box-container ">
           <div className="content-box card-art-box">
             <Card image={card.image} isReversed={false} />
 
@@ -221,7 +220,6 @@ function App() {
             <CardText title={card.title} meaning={card.meaning} description={card.description} />
           </div>
         </div>
-      </div>
     </>
   );
 }
