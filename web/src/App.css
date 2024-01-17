@@ -31,7 +31,7 @@
 
 .card-draw-widget {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   column-gap: 10px;
   padding-top: 5%;
   margin-top: 1em;
@@ -40,7 +40,7 @@
 
 .draw-button {
   font-family: "Vulnus";
-  min-width: 10%;
+  min-width: 1%;
   font-size: 2em;
   height: 100%;
   background-color: var(--tarot-red);
@@ -53,6 +53,7 @@
   padding-bottom: 2%;
   border-radius: .75rem;
   box-shadow: 2px 2px 2px var(--tarot-black);
+  margin-bottom: 1rem;
 
 }
 
@@ -68,14 +69,12 @@
 
   .card-draw-widget >  * {
     margin-left: 20%;
-
-
   }
 
 }
 .deck-select-opts {
   font-family: "wollstonecraft", Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 .deck-select {
@@ -116,7 +115,7 @@ body {
     );
 
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   
   flex-direction: row;
   justify-content: center;
@@ -125,19 +124,6 @@ body {
 
 
 
-
-.fade-in-text {
-  animation-name: fadein;
-  animation-duration: 10s;
-}
-
-
-
-@keyframes fadein {
-  from { color: transparent; }
-   to { color: black; }
-
-}
 
 /********************/
 
@@ -237,7 +223,7 @@ svg circle.center-circle {
 
 .card-text-box {
   font-family: "wollstonecraft";
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin: 2.5rem;
   color: var(--tarot-black);
   line-height: 1.5;
@@ -275,19 +261,24 @@ svg circle.center-circle {
 @media screen and (max-width: 800px) {
   .container {
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-content:space-around ;
   }
+
+  .card-title {
+    font-size: 2em ;
+  }
+
+  
 
   .content-box {
     min-width: 90%;
 
-    /* margin: 5% 5% 0% 5%; */
-    margin-bottom: 0%;
+    margin: 5% 5% 0% 5%;
   }
 
   .container {
-    min-width: 100%;
+    width:100%;
 
   }
 
@@ -300,6 +291,7 @@ svg circle.center-circle {
   .card-text-box {
     margin-top: 0%;
     margin-bottom: 10%;
+
   }
 
 }
