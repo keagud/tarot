@@ -74,7 +74,7 @@
 
 }
 .deck-select-opts {
-  font-family: "wollstonecraft";
+  font-family: "wollstonecraft", Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 1.2em;
 }
 
@@ -250,7 +250,7 @@ svg circle.center-circle {
   text-decoration-line: underline;
   outline-color: var(--tarot-peach);
   font-size: 2.4em ;
-  font-family: "vulnus";
+  font-family: "vulnus", Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-left: 10%;
   margin-right: 10%;
 }
