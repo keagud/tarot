@@ -31,7 +31,6 @@
 .card-container {
  margin: 5rem;
   /* position: relative; */
-  max-width: 700px;
   height: 100%;
   
   aspect-ratio: 9/15;
@@ -170,6 +169,7 @@ svg circle.center-circle {
   width: 100%;
 
   margin-top: 10%;
+  margin: 5%;
 
 
 }
@@ -205,6 +205,7 @@ svg circle.center-circle {
 .card .front img {
 
   clip-path: inset(3% 7% 5% 5%);
+  width: 100%;
 }
 
 
@@ -230,5 +231,43 @@ svg circle.center-circle {
   transform: rotateY(0);
 
 }
+
+
+.reversed {
+  transform: rotate(180deg);
+}
+
+
+.container {
+  flex-direction: row;
+  display: flex;
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .content-box {
+    min-width: 100%;
+
+  }
+
+  .container {
+    min-width: 100%;
+
+  }
+
+
+  .card-text-box {
+    margin-top: 5%;
+  }
+
+}
+
+
+
+
 
 

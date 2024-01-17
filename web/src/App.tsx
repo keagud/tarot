@@ -39,7 +39,7 @@ interface CardTextProps {
 }
 
 function CardText({ title, description, meaning }: CardTextProps) {
-  const [runAnimation, setRunAnimation] = useState(true);
+  const [_, setRunAnimation] = useState(true);
 
   const [[gradientStart, gradientEnd], setGradient] = useState<[number, number]>([100, 100]);
   const requestRef = useRef<number>(0);
@@ -187,10 +187,7 @@ function App() {
 
   const getCard = async (deck: DeckType) => {
     let drawnCard = await apiFetch(`/draw/${deck}`);
-
     setCard(drawnCard);
-    console.log(`GOT: ${drawnCard.title}`);
-    console.log(`SET CARD IS: ${card?.title}`);
     setReversed(rollReversed);
   };
 
@@ -210,16 +207,18 @@ function App() {
   return (
     <>
       <div className="container display-box-container ">
-          <div className="content-box card-art-box">
-            <Card image={card.image} isReversed={false} />
+        <div className="content-box card-art-box">
+          <Card image={card.image} isReversed={isReversed} />
 
-            <CardDrawWidget onDrawFunc={getCard} />
-          </div>
-
-          <div className="content-box card-text-box">
-            <CardText title={card.title} meaning={card.meaning} description={card.description} />
-          </div>
+          <CardDrawWidget onDrawFunc={getCard} />
         </div>
+
+        <div className="content-box card-text-box">
+          <CardText 
+            title={isReversed ? `${card.title.trim()} (REVERSED)` : card.title.trim()} 
+            meaning={isReversed ? card.reversed : card.meaning} description={card.description} />
+        </div>
+      </div>
     </>
   );
 }

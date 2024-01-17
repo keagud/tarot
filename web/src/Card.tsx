@@ -62,6 +62,7 @@ export default function Card({ image, isReversed }: CardProps) {
 
   const displayImage = useRef<string>(image);
 
+
   useEffect(() => {
     setIsFlipping(true);
 
@@ -75,7 +76,7 @@ export default function Card({ image, isReversed }: CardProps) {
     <div className="card-container">
       <div className={`  card ${isFlipping ? 'card flipping' : 'card'}  `}>
         <div className="front " style={{ transition: `transform ${animationSecs}s` }}>
-          <img src={makeImageUrl(displayImage.current)} />
+          <img className={isReversed ? "reversed": ""} src={makeImageUrl(displayImage.current)} />
         </div>
 
         <div className="back" style={{ transition: `transform ${animationSecs}s` }}>
