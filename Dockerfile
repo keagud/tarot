@@ -51,6 +51,8 @@ RUN pnpm prune
 ## Runtime
 FROM nginx:1.24.0-alpine-slim
 WORKDIR /app
+ENV NODE_ENV="production"
+ENV PORT="8080"
 RUN apk add nodejs 
 
 #copy static files
@@ -75,5 +77,5 @@ EXPOSE 80
 # copy and run the startup script
 COPY ./run.sh .
 RUN chmod +x run.sh
-#CMD ["./run.sh"]
+CMD ["./run.sh"]
 

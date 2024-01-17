@@ -1,7 +1,7 @@
 #!/bin/sh
 # entry point script to start the node server and nginx
-nginx -g 'daemon off;' &\
- node ./server/src/index.js;
-fg %
+
+node ./server/src/index.js &\
+  nginx -g 'daemon off;' 
 
 

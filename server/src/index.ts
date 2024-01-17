@@ -16,6 +16,8 @@ function handleResponse<R extends Response>(res: R, card?: TarotCard) {
 function main() {
   const isDebug = (process.env.NODE_ENV ?? 'development') === 'development';
 
+  console.log(`EXPRESS DEBUG STATUS: ${isDebug}`)
+
   const app: Express = express();
   const port = process.env.PORT ?? '8080';
   console.log(`Using port ${port}`);
@@ -29,7 +31,7 @@ function main() {
   console.log(`static directory = ${staticDir}`);
 
   app.use(routeRoot, express.static(staticDir));
-  app.use(morgan('dev'));
+  app.use(morgan('combined'));
 
   //get a random card from :deck
   router.get('/draw/:deck', (req, res) => {
