@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { makeImageUrl } from './api';
-//import "./Card.css"
 
 // SVG for the card back image
 export function CardBack() {
@@ -59,6 +58,7 @@ export default function Card({ image, isReversed }: CardProps) {
   const animationSecs = 0.7;
 
   const [isFlipping, setIsFlipping] = useState(true);
+  const displayReversed = useRef<boolean>(isReversed);
 
   const displayImage = useRef<string>(image);
 
@@ -68,6 +68,7 @@ export default function Card({ image, isReversed }: CardProps) {
 
     setTimeout(() => {
       displayImage.current = image;
+      displayReversed.current = isReversed;
       setIsFlipping(false);
     }, animationSecs * 1000);
   }, [image]);
@@ -76,7 +77,7 @@ export default function Card({ image, isReversed }: CardProps) {
     <div className="card-container">
       <div className={`  card ${isFlipping ? 'card flipping' : 'card'}  `}>
         <div className="front " style={{ transition: `transform ${animationSecs}s` }}>
-          <img className={isReversed ? "reversed": ""} src={makeImageUrl(displayImage.current)} />
+          <img className={displayReversed.current ? "reversed": ""} src={makeImageUrl(displayImage.current)} />
         </div>
 
         <div className="back" style={{ transition: `transform ${animationSecs}s` }}>

@@ -74,38 +74,31 @@ function CardText({ title, description, meaning }: CardTextProps) {
         }}
       >
         <>
-          <div className="font-sans m-10 leading-loose  text-tarot-jet">
-            <div>
-              <h1
-                className="underline text-center outline-tarot-yellow"
-                style={{ fontFamily: 'Vulnus', fontSize: '3.5em' }}
-              >
-                {title.toUpperCase()}
-              </h1>
-            </div>
+          {/* <div className="card-text font-sans m-10 leading-loose  text-tarot-jet"> */}
+          <h2
+            className="card-title"
+          >
+            {title.toUpperCase()}
+          </h2>
 
-            <div onClick={() => setGradient([0, 0])}>
-              <br />
-              <div
-                className="text-center m-10"
-                style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em' }}
-              >
-                <p> {meaning}</p>
-              </div>
-              <br />
-              <span className="dingbat">❂❂❂</span>
+          <div onClick={() => setGradient([0, 0])}>
+            <br />
+            <p> {meaning}</p>
+            <br />
+            <span className="dingbat">❂❂❂</span>
 
-              <div
-                className="m-10 overflow-scroll"
-                style={{ fontFamily: 'wollstonecraft', fontSize: '1.7em', fontStyle: 'italic' }}
-              >
-                {' '}
-                <>
-                  <p> {description} </p>{' '}
-                </>
-              </div>
+            <br />
+
+            <div
+              className="card-description-text"
+            >
+              {' '}
+              <>
+                <p> {description} </p>{' '}
+              </>
             </div>
           </div>
+          {/* </div> */}
         </>
       </div>
     </>
@@ -214,11 +207,16 @@ function App() {
         </div>
 
         <div className="content-box card-text-box">
-          <CardText 
-            title={isReversed ? `${card.title.trim()} (REVERSED)` : card.title.trim()} 
+          <CardText
+            title={isReversed ? `${card.title.trim()} (REVERSED)` : card.title.trim()}
             meaning={isReversed ? card.reversed : card.meaning} description={card.description} />
         </div>
       </div>
+
+        <div className="bottom-bar" >
+          <a href='https://implicit.computer'>Who made this?</a>
+        </div>
+
     </>
   );
 }

@@ -1,52 +1,27 @@
 @import "theme.css";
-
 .content-box {
-  min-width: 40%;
+  width: 40%;
   position: relative;
-
   flex: 1;
-  /* display: inline-block; */
   height: 100%;
-  /* width: 100%; */
   margin-bottom: 20%;
-
-}
-
-@media screen and (min-width:600px){
-  .content-box {
-    flex: 1;
-    width: 50%;
-  }
-
-}
-
-@media screen and(max-width:600px) {
-  .content-box {
-    flex: auto;
-    width: 100%;
-
-  }
 
 }
 .card-container {
  margin: 5rem;
-  /* position: relative; */
   height: 100%;
+  width: 70%; 
   
   aspect-ratio: 9/15;
 }
 
 .card-area-container {
-  /*place-content: center;*/
   min-width: 40%;
 }
 
 .display-box-container {
   display:flex;
-
-  /* justify-content: center; */
-  flex-wrap: wrap;
-  width: 100%;
+  width: 90%;
 }
 
 .card-text-box {
@@ -59,12 +34,13 @@
   justify-content: space-evenly;
   column-gap: 10px;
   padding-top: 5%;
-  margin-top: 1.5em;
+  margin-top: 1em;
   padding-bottom: 5%;
 }
 
 .draw-button {
   font-family: "Vulnus";
+  min-width: 10%;
   font-size: 2em;
   height: 100%;
   background-color: var(--tarot-red);
@@ -81,6 +57,22 @@
 }
 
 
+@media screen and (max-width: 900px) {
+  .card-draw-widget {
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-evenly;
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+
+  .card-draw-widget >  * {
+    margin-left: 20%;
+
+
+  }
+
+}
 .deck-select-opts {
   font-family: "wollstonecraft";
   font-size: 1.2em;
@@ -120,7 +112,7 @@ body {
   background: linear-gradient(
     var(--tarot-lightblue) , 
     var(--tarot-offwhite) 60%,
-    var(--tarot-peach) 200%
+    var(--tarot-peach) 100%
     );
 
   display: flex;
@@ -243,15 +235,55 @@ svg circle.center-circle {
   display: flex;
 }
 
+.card-text-box {
+  font-family: "wollstonecraft";
+  font-size: 1.5em;
+  margin: 2.5rem;
+  color: var(--tarot-black);
+  line-height: 1.5;
+  text-align: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.card-title {
+  text-decoration-line: underline;
+  outline-color: var(--tarot-peach);
+  font-size: 2.4em ;
+  font-family: "vulnus";
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.card-description-text {
+  font-style: italic;
+}
+
+
+.bottom-bar {
+  display:flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.bottom-bar a {
+  color: var(--tarot-darkgray);
+  text-decoration-line: underline;
+  font-family: 'Courier New', Courier, monospace;
+}
+
 @media screen and (max-width: 800px) {
   .container {
     flex-direction: column;
     justify-content: space-around;
+    align-content:space-around ;
   }
 
   .content-box {
-    min-width: 100%;
+    min-width: 90%;
 
+    /* margin: 5% 5% 0% 5%; */
+    margin-bottom: 0%;
   }
 
   .container {
@@ -259,12 +291,19 @@ svg circle.center-circle {
 
   }
 
+  .card-container {
+
+    margin: 5% 10% 0% 10%;
+    width: 80%;
+  }
 
   .card-text-box {
-    margin-top: 5%;
+    margin-top: 0%;
+    margin-bottom: 10%;
   }
 
 }
+
 
 
 
