@@ -16,7 +16,7 @@ function handleResponse<R extends Response>(res: R, card?: TarotCard) {
 function main() {
   const isDebug = (process.env.NODE_ENV ?? 'development') === 'development';
 
-  console.log(`EXPRESS DEBUG STATUS: ${isDebug}`)
+  console.log(`EXPRESS DEBUG STATUS: ${isDebug}`);
 
   const app: Express = express();
   const port = process.env.PORT ?? '8080';

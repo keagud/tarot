@@ -1,4 +1,5 @@
 @import "theme.css";
+@import "container.css";
 .content-box {
   width: 40%;
   position: relative;

@@ -13,8 +13,6 @@ import {
   ReactNode,
 } from 'react';
 
-import _, { get } from 'lodash';
-
 const getMask = (
   [start, end]: [number, number],
   step: number = 0.3,
@@ -74,12 +72,7 @@ function CardText({ title, description, meaning }: CardTextProps) {
         }}
       >
         <>
-          {/* <div className="card-text font-sans m-10 leading-loose  text-tarot-jet"> */}
-          <h2
-            className="card-title"
-          >
-            {title.toUpperCase()}
-          </h2>
+          <h2 className="card-title">{title.toUpperCase()}</h2>
 
           <div onClick={() => setGradient([0, 0])}>
             <br />
@@ -89,16 +82,13 @@ function CardText({ title, description, meaning }: CardTextProps) {
 
             <br />
 
-            <div
-              className="card-description-text"
-            >
+            <div className="card-description-text">
               {' '}
               <>
                 <p> {description} </p>{' '}
               </>
             </div>
           </div>
-          {/* </div> */}
         </>
       </div>
     </>
@@ -130,7 +120,7 @@ function CardDrawWidget({ onDrawFunc }: { onDrawFunc: (_: DeckType) => any }) {
 
   return (
     <>
-      <div className="card-draw-widget">
+      <div className="card-draw-widget container">
         <button className="draw-button" onClick={() => onDrawFunc(getDeck())}>
           {' '}
           <div className="draw-button-text">Draw</div>{' '}
@@ -199,7 +189,7 @@ function App() {
 
   return (
     <>
-      <div className="container display-box-container ">
+      <div className="container display-box-container">
         <div className="content-box card-art-box">
           <Card image={card.image} isReversed={isReversed} />
 
@@ -209,15 +199,16 @@ function App() {
         <div className="content-box card-text-box">
           <CardText
             title={isReversed ? `${card.title.trim()} (REVERSED)` : card.title.trim()}
-            meaning={isReversed ? card.reversed : card.meaning} description={card.description} />
+            meaning={isReversed ? card.reversed : card.meaning}
+            description={card.description}
+          />
         </div>
       </div>
 
-      <div className="bottom-bar" >
+      <div className="bottom-bar">
         <a href="https://github.com/keagud/tarot">Source </a>
-        <a href='https://implicit.computer'>Who made this?</a>
+        <a href="https://implicit.computer">Who made this?</a>
       </div>
-
     </>
   );
 }
