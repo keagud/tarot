@@ -1,6 +1,6 @@
 # Tarot
  
-A React/Express app I made mostly to get back into practice with webdev. It's hosted at [pentacles.fly.io](https://pentacles.fly.io), or [pentacles.page](https://pentacles.page) (if you're reading this in a future where I didn't renew the domain - the fly.io link should be more stable)
+A React/Express app I made mostly to get back into practice with webdev. It's hosted at [pentacles.fly.dev](https://pentacles.fly.dev), or [pentacles.page](https://pentacles.page) (if you're reading this in a future where I didn't renew the domain - the fly.dev link should be more stable)
 
 
 ## Sources
