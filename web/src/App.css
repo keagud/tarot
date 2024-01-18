@@ -108,6 +108,7 @@
 
 
 body {
+
   background: linear-gradient(
     var(--tarot-lightblue) , 
     var(--tarot-offwhite) 60%,
@@ -115,7 +116,6 @@ body {
     );
 
   display: flex;
-  /* flex-wrap: wrap; */
   
   flex-direction: row;
   justify-content: center;
@@ -124,8 +124,6 @@ body {
 
 
 
-
-/********************/
 
 svg rect {
   fill: var(--tarot-red);
@@ -242,7 +240,6 @@ svg circle.center-circle {
 }
 
 .bottom-bar a {
-
   opacity: 70%;
   color: var(--tarot-darkgray);
 }

@@ -1,11 +1,16 @@
 @font-face{
   font-family: 'Vulnus';
-  src: local('Vulnus'), url(./assets/fonts/vulnus.woff2), format('woff');
+  src: 
+    local('Vulnus'), 
+    url(./assets/fonts/vulnus.woff2) format('woff') ,
+    url(./assets/fonts/vulnus.ttf) format('truetype');
 }
 
 @font-face{
   font-family: "wollstonecraft";
-  src: local('wollstonecraft'), url(./assets/fonts/wollstonecraft.woff), format('woff')
+  src: local('wollstonecraft'), 
+    url(./assets/fonts/wollstonecraft.woff) format('woff'),
+    url(./assets/fonts/wollstonecraft.ttf) format('truetype')
 
 }
 
