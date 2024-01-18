@@ -213,9 +213,10 @@ function App() {
         </div>
       </div>
 
-        <div className="bottom-bar" >
-          <a href='https://implicit.computer'>Who made this?</a>
-        </div>
+      <div className="bottom-bar" >
+        <a href="https://github.com/keagud/tarot">Source </a>
+        <a href='https://implicit.computer'>Who made this?</a>
+      </div>
 
     </>
   );
