@@ -72,9 +72,9 @@ function CardText({ title, description, meaning }: CardTextProps) {
         }}
       >
         <>
+          <div onClick={() => setGradient([0, 0])}>
           <h2 className="card-title">{title.toUpperCase()}</h2>
 
-          <div onClick={() => setGradient([0, 0])}>
             <br />
             <p> {meaning}</p>
             <br />
